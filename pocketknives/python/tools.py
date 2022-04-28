@@ -62,18 +62,26 @@ def timer(func, verbose=True):
 
 
 def brief(a):
-    """Summarize an ndarray by shape and dtype if too large
+    """Summarize an array-like object by shape and dtype if too large
 
     Parameters
     ----------
     a : object
+        Handles np.ndarray and torch.tensor
+        
+    Returns
+    -------
+    str
 
     """
 
     MAX_SIZE = 20
-    if isinstance(a, np.ndarray) and a.size > MAX_SIZE:
-        return f"ndarray({a.shape}, {a.dtype}, {eng_string(a.nbytes)}B)"
-    return str(a)
+    if hasattr(a, 'shape') and np.prod(a.shape) > MAX_SIZE:
+        ret = f"{a.__class__.__name__}({a.shape}, {a.dtype})"
+        if hasattr(a, 'nbytes'):
+            return f"{ret[:-1]}, {eng_string(a.nbytes)}B)"
+        return ret
+    return repr(a)
 
 
 # Shamelessly stolen from:

@@ -2,10 +2,26 @@
 
 """Numerical related tools that keep coming back up"""
 
+from functools import reduce
 from math import isclose
 
 import numpy as np
 
+
+def factors(n):
+    """Computes all of the given facotrs of an integer
+    
+    Parameters
+    ----------
+    n : int
+    
+    Returns
+    -------
+    list[int]
+    
+    """
+    return set(reduce(list.__add__, 
+                ([i, n//i] for i in range(1, int(n**0.5) + 1) if not n % i)))
 
 def approx_lte(x, y):
     """Workaround for floating point precision <= comparison
