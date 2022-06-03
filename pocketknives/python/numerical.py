@@ -17,7 +17,7 @@ def factors(n):
     
     Returns
     -------
-    list[int]
+    set[int]
     
     """
     return set(reduce(list.__add__, 
