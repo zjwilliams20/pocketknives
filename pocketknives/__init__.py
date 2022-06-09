@@ -25,6 +25,7 @@ Miscellaneous
 -------------
 
   - ticks_off - turn off all tick marks and axes notations on plt.gcf()
+  - set_bounds - Set the axis on plt.gca() within some margin of the xy data
   - get_logger - generic logger utility with hardcoded colors by module name
   - ColorFormatter - boilerplate class that implements color logging
 
