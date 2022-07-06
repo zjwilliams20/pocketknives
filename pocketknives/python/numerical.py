@@ -4,57 +4,63 @@
 
 from functools import reduce
 from math import isclose
+from operator import mul
 
 import numpy as np
 
 
 def factors(n):
     """Computes all of the given facotrs of an integer
-    
+
     Parameters
     ----------
     n : int
-    
+
     Returns
     -------
     set[int]
-    
+
     """
-    return set(reduce(list.__add__, 
-                ([i, n//i] for i in range(1, int(n**0.5) + 1) if not n % i)))
+    return set(
+        reduce(
+            list.__add__,
+            ([i, n // i] for i in range(1, int(n**0.5) + 1) if not n % i),
+        )
+    )
+
 
 def approx_lte(x, y):
     """Workaround for floating point precision <= comparison
-    
+
     Parameters
     ----------
     x, y : float
         Numbers to be compared
-    
+
     Returns
     -------
     bool
         Whether x <= y with some cushion for numerical precision
-    
+
     """
     return x <= y or isclose(x, y)
 
 
 def approx_gte(x, y):
     """Workaround for floating point precision >= comparison
-    
+
     Parameters
     ----------
     x, y : float
         Numbers to be compared
-    
+
     Returns
     -------
     bool
-        Whether x >= y with some cushion for numerical precision 
-        
+        Whether x >= y with some cushion for numerical precision
+
     """
-    
+
     return x >= y or isclose(x, y)
 
 
@@ -97,3 +103,21 @@ def asrows(a: np.ndarray):
         return a.T
     return a
 
+
+def nchoosek(n, k):
+    """n! / (k! * (n - k)!)
+
+    Parameters
+    ----------
+    n, k : int
+
+    Returns
+    -------
+    int
+
+    """
+
+    k = min(k, n - k)
+    num = reduce(mul, range(n, n - k, -1), 1)
+    denom = reduce(mul, range(1, k + 1), 1)
+    return num // denom
