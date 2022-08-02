@@ -120,3 +120,21 @@ def eng_string(x, si=True):
 
     return f"{sign}{x3}{exp3_text}"
 
+
+class RangeIterator:
+    """Turns a module-level range into an iterator for global access"""
+
+    def __init__(self, *args):
+        self._range = range(*args)
+        self._range_iter = iter(self._range)
+        self.i = self._range.start
+
+    def __getitem__(self, inds):
+        return self._range[inds]
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.i = next(self._range_iter)
+        return self.i
