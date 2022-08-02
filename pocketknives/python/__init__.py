@@ -1,4 +1,4 @@
-from .graphics import ticks_off, set_bounds
+from .graphics import set_bounds, ticks_off
 from .logger import ColorFormatter, get_logger
-from .numerical import factors, approx_lte, approx_gte, ascolumns, asrows, nchoosek
-from .tools import dump_locals, uncomment_json, timer, brief, eng_string
+from .numerical import approx_gte, approx_lte, ascolumns, asrows, factors, nchoosek
+from .tools import brief, dump_locals, eng_string, timer, uncomment_json

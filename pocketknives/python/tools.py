@@ -19,7 +19,7 @@ def dump_locals():
     print(f"Function: '{outer_frame.function}'")
     print(f"File: '{outer_frame.filename}'")
 
-    caller_locals = frame.f_back.f_locals    
+    caller_locals = frame.f_back.f_locals
     for k, v in caller_locals.items():
         v = brief(v)
         print(f"\t'{k}': {v}")
@@ -27,30 +27,30 @@ def dump_locals():
 
 def uncomment_json(contents: str):
     """Uncomment the given .json contents
-    
+
     Parameters
     ----------
     contents : str
         Contents of the json file with comments
-    
+
     Returns
     -------
     str
         json contents without comments
 
     """
-    return re.sub("//.+?\n", '\n', contents)
+    return re.sub("//.+?\n", "\n", contents)
 
 
 def timer(func, verbose=True):
     """Function timer decorator"""
-    
+
     @wraps(func)
     def wrapper(*args, **kwargs):
         t0 = perf_counter()
         ret = func(*args, **kwargs)
         T = perf_counter() - t0
-        
+
         inputs = ""
         if verbose:
             inputs = f"({[brief(arg) for arg in args]}, {kwargs})"
@@ -68,7 +68,7 @@ def brief(a):
     ----------
     a : object
         Handles np.ndarray and torch.tensor
-        
+
     Returns
     -------
     str
@@ -76,9 +76,9 @@ def brief(a):
     """
 
     MAX_SIZE = 20
-    if hasattr(a, 'shape') and np.prod(a.shape) > MAX_SIZE:
+    if hasattr(a, "shape") and np.prod(a.shape) > MAX_SIZE:
         ret = f"{a.__class__.__name__}({a.shape}, {a.dtype})"
-        if hasattr(a, 'nbytes'):
+        if hasattr(a, "nbytes"):
             return f"{ret[:-1]}, {eng_string(a.nbytes)}B)"
         return ret
     return repr(a)
@@ -103,20 +103,20 @@ def eng_string(x, si=True):
 
     x = float(x)
 
-    sign = ''
+    sign = ""
     if x < 0:
         x = -x
-        sign = '-'
-    exp = int(math.floor(math.log10( x)))
+        sign = "-"
+    exp = int(math.floor(math.log10(x)))
     exp3 = exp - (exp % 3)
-    x3 = x / ( 10 ** exp3)
+    x3 = x / (10**exp3)
 
     if si and exp3 >= -24 and exp3 <= 24 and exp3 != 0:
-        exp3_text = 'yzafpnum kMGTPEZY'[(exp3 - (-24)) // 3]
+        exp3_text = "yzafpnum kMGTPEZY"[(exp3 - (-24)) // 3]
     elif exp3 == 0:
-        exp3_text = ''
+        exp3_text = ""
     else:
-        exp3_text = 'e%s' % exp3
+        exp3_text = "e%s" % exp3
 
     return f"{sign}{x3}{exp3_text}"
 
