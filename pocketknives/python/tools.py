@@ -120,6 +120,26 @@ def eng_string(x, si=True):
 
     return f"{sign}{x3}{exp3_text}"
 
+def progressbar(it, prefix="", size=60, skip=1, out=sys.stdout):
+    """Simple built-in progress bar
+    
+    Reference:
+        https://stackoverflow.com/questions/3160699/python-progress-bar
+    Changes:
+     - changed fill character '█' -> '-'
+     - added skip parameter to only print on certain iterations
+    """
+    
+    count = len(it)
+    def show(j):
+        x = size * j // count
+        print(f"{prefix}[{u'-'*x}{('.'*(size-x))}] {j}/{count}", end='\r', file=out, flush=True)
+    show(0)
+    for i, item in enumerate(it):
+        yield item
+        if not (i+1) % skip:
+            show(i+1)
+    print("\n", flush=True, file=out)
 
 class RangeIterator:
     """Turns a module-level range into an iterator for global access"""
