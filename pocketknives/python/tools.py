@@ -141,20 +141,4 @@ def progressbar(it, prefix="", size=60, skip=1, out=sys.stdout):
             show(i+1)
     print("\n", flush=True, file=out)
 
-class RangeIterator:
-    """Turns a module-level range into an iterator for global access"""
 
-    def __init__(self, *args):
-        self._range = range(*args)
-        self._range_iter = iter(self._range)
-        self.i = self._range.start
-
-    def __getitem__(self, inds):
-        return self._range[inds]
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        self.i = next(self._range_iter)
-        return self.i
